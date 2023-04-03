@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
+from datetime import datetime
 
 # This is creating a small dataset using the first page of reviews (30 per book)
 # The aim is more to prove I can use the tool and conduct sentiment analysis, rather than creating a dataset with 17000+ reviews per book
@@ -30,12 +31,19 @@ reviewid = 0
 
 # Iterate through each page for each book, and collect information from the reviews on each
 for link in links:
-    booklink = requests.get(link).text
+    booklink = requests.get(link).text # Collect list of links to books to iterate through
     reviewfinder = BeautifulSoup(booklink, 'lxml')
     booktitle = reviewfinder.find("h1", class_="Text Text__title1").text
     bookauthor = reviewfinder.find("span", class_="ContributorLink__name").text
-    reviews = reviewfinder.findAll("span", class_="Formatted")
+    reviews = reviewfinder.findAll("span", class_="Formatted") # This currently includes the top summary text too which is an issue.
+
+
+    for review in reviews:
+        review = review.get_text()
+        print(review)
     # TODO: Strip and clean the text here, and then we can add it into a dataframe at a later point
+
+    # This one gets the reviewers sorted, as well as the things that don't need finding for every single link, like the book title and author, and book id / review id 
     reviewers = reviewfinder.findAll("div", class_="ReviewerProfile__name")
     for person in reviewers:
         reviewer = person.a.string
@@ -44,5 +52,27 @@ for link in links:
         reviewid += 1
         book_title.append(booktitle)
         book_author.append(bookauthor)
-    bookid += 1
 
+    reviewdate = reviewfinder.findAll("span", class_="Text Text__body3") # Finding all review dates
+    for date in reviewdate:
+        # The first of this class on every page won't because the span class "Text Text__body3" also covers the publication date info at the top of the page
+        dateofreview = date.a
+        # If we're not looking at the top of the page publication info, we get the review date as a link, so we can extract the text from that
+        # We then convert to datetime so we can actually use the data
+        if dateofreview != None:
+            dateofreview = date.a.string
+            datefinal = datetime.strptime(dateofreview, "%B %d, %Y").date()
+            review_date.append(dateofreview)
+
+    allcards = reviewfinder.findAll("div", class_="ShelfStatus") # Looking through review cards for rating
+    for card in allcards:
+        # Making sure 'None' is added into the reviews that provided no rating
+        if card.text == "Read" or card.text == "Want to read" or "Shelved as" in card.text:
+            review_rating.append("None")
+        elif card.find("span", class_="RatingStars RatingStars__small"):
+            # If we have a rating (and thus rating stars), we extract the rating in the form of the aria-label and index the text for the number
+            # All ratings were formatted as "Rating x out of 5" so the rating number could be reliably found from the string
+            rating = card.find("span", class_="RatingStars RatingStars__small")["aria-label"]
+            review_rating.append(rating[7])
+    
+    bookid += 1
