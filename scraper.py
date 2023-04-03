@@ -35,12 +35,11 @@ for link in links:
     reviewfinder = BeautifulSoup(booklink, 'lxml')
     booktitle = reviewfinder.find("h1", class_="Text Text__title1").text
     bookauthor = reviewfinder.find("span", class_="ContributorLink__name").text
-    reviews = reviewfinder.findAll("span", class_="Formatted") # This currently includes the top summary text too which is an issue.
-
+    reviews = reviewfinder.findAll("section", class_="ReviewText__content") # This is the closest class level that is not in common with the blurb
 
     for review in reviews:
-        review = review.get_text()
-        print(review)
+        review = review.div.div.span.get_text() # Go into the truncatedcontent divs and pull out the text stripped of formatting tags
+        review_text.append(review)
     # TODO: Strip and clean the text here, and then we can add it into a dataframe at a later point
 
     # This one gets the reviewers sorted, as well as the things that don't need finding for every single link, like the book title and author, and book id / review id 
