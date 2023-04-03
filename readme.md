@@ -2,7 +2,7 @@
 ## Scraping the Goodreads Best Romances of 2022 for reviews
 
 ### What is this?
-Just the start of a project at the moment, so very much a **work in progress for now**. I'm learning how to use BeautifulSoup by scraping through the Goodreads site. It starts on the "Best Romances of 2022" shortlist, navigating through each book and extracting the first 30 reviews. The information that is collected is the following:
+The start of a project that will look into sentiment analysis of Goodreads reviews. Learned how to use BeautifulSoup by scraping through the Goodreads site. It starts on the "Best Romances of 2022" shortlist, navigating through each book and extracting the first 30 reviews. The information that is collected is the following:
 
 **Books**
 - book_id (numeric ID (0-19) for the book)
@@ -17,7 +17,7 @@ Just the start of a project at the moment, so very much a **work in progress for
 - review_text (text; cleaned and stripped)
 
 ### What is it for?
-This is going to eventually become a pandas dataframe and then a .csv file, which I'll upload to Kaggle and start to use as part of a portfolio project on sentiment analysis
+The .csv file that has been produced from the scraper has been uploaded to Kaggle (https://www.kaggle.com/datasets/amandamch/goodreads-best-romance-2022) and will be used as the basis for a sentiment analysis project.
 
 ### What skills does this code show?
 1. Python: BeautifulSoup and Pandas
