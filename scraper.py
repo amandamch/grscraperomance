@@ -1,6 +1,8 @@
 from bs4 import BeautifulSoup
 import requests
 from datetime import datetime
+import pandas as pd
+from tabulate import tabulate
 
 # This is creating a small dataset using the first page of reviews (30 per book)
 # The aim is more to prove I can use the tool and conduct sentiment analysis, rather than creating a dataset with 17000+ reviews per book
@@ -33,7 +35,8 @@ reviewid = 0
 for link in links:
     booklink = requests.get(link).text # Collect list of links to books to iterate through
     reviewfinder = BeautifulSoup(booklink, 'lxml')
-    booktitle = reviewfinder.find("h1", class_="Text Text__title1").text
+    if reviewfinder.find("h1", class_="Text Text__title1"):
+        booktitle = reviewfinder.find("h1", class_="Text Text__title1").text
     bookauthor = reviewfinder.find("span", class_="ContributorLink__name").text
     reviews = reviewfinder.findAll("section", class_="ReviewText__content") # This is the closest class level that is not in common with the blurb
 
@@ -46,6 +49,7 @@ for link in links:
     reviewers = reviewfinder.findAll("div", class_="ReviewerProfile__name")
     for person in reviewers:
         reviewer = person.a.string
+        review_writer.append(reviewer)
         review_id.append(reviewid)
         book_id.append(bookid)
         reviewid += 1
@@ -61,7 +65,7 @@ for link in links:
         if dateofreview != None:
             dateofreview = date.a.string
             datefinal = datetime.strptime(dateofreview, "%B %d, %Y").date()
-            review_date.append(dateofreview)
+            review_date.append(datefinal)
 
     allcards = reviewfinder.findAll("div", class_="ShelfStatus") # Looking through review cards for rating
     for card in allcards:
@@ -75,3 +79,20 @@ for link in links:
             review_rating.append(rating[7])
     
     bookid += 1
+
+# We've now done the scraping and turning the data into something usable, so the next step is creating a pandas dataframe
+# This is really easy; we just create a dictionary of the lists that we've constructed
+# Since we've accounted for all the None reviews, all the lists are the same length and line up
+
+dict = {'book_id': book_id, 
+        'book_title': book_title,
+        'book_author': book_author,
+        'review_id': review_id,
+        'review_date': review_date,
+        'review_writer': review_writer,
+        'rating': review_rating,
+        'review_text': review_text}
+
+df = pd.DataFrame(dict)
+
+df.to_csv('scraped.csv')
