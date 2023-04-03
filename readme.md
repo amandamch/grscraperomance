@@ -3,10 +3,12 @@
 
 ### What is this?
 Just the start of a project at the moment, so very much a **work in progress for now**. I'm learning how to use BeautifulSoup by scraping through the Goodreads site. It starts on the "Best Romances of 2022" shortlist, navigating through each book and extracting the first 30 reviews. The information that is collected is the following:
+
 **Books**
 - book_id (numeric ID (0-19) for the book)
 - book_title (Title)
 - book_author (Author)
+
 **Reviews**
 - review_id (numeric ID (0-599) for the review)
 - review_date (date review was written)
