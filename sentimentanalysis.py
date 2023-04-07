@@ -48,7 +48,8 @@ print(f" One star reviews: {onestar} \n Two star reviews: {twostar} \n Three sta
 
 # This preliminary investigation shows us that there are 55, 88, 82, 152, and 185 of each star rating respectively, out of 562 reviews
 # If we count 3 star reviews as negative, we have a roughly 60-40 positive-negative split, which is a better balance than if we counted 3 star reviews as positive
-# This have been added into the code above, and gets added to the dataframe here:
+# Once we've built the model, we can change our mind if making 3 star reviews positive increases accuracy, which is does- I'll discuss this more in the write up
+
 df['posneg'] = posneg
 
 # Tokenise the data - need to figure out how to do this for every review in the dataframe
