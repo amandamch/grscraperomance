@@ -52,7 +52,7 @@ print(f" One star reviews: {onestar} \n Two star reviews: {twostar} \n Three sta
 
 df['posneg'] = posneg
 
-# Tokenise the data - need to figure out how to do this for every review in the dataframe
+# Tokenise the data
 def preprocessing(review):
     words = [token.lemma_ for token in nlp(review) if not token.is_punct] # Tokenizing and lemmatizing (rather than stemming, to ensure more correct word forms)
     words = [re.sub(r"[^A-Za-z@']", "", word) for word in words] # Use regex to replace the characters that are not A-Za-z@' with nothing, including emoji
