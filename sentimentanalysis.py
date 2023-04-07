@@ -36,7 +36,7 @@ for review in range(len(df)):
         posneg.append(0)
     elif df.iloc[review]['rating'] == 3:
         threestar += 1
-        posneg.append(1)
+        posneg.append(0)
     elif df.iloc[review]['rating'] == 4:
         fourstar += 1
         posneg.append(1)
@@ -48,7 +48,7 @@ print(f" One star reviews: {onestar} \n Two star reviews: {twostar} \n Three sta
 
 # This preliminary investigation shows us that there are 55, 88, 82, 152, and 185 of each star rating respectively, out of 562 reviews
 # If we count 3 star reviews as negative, we have a roughly 60-40 positive-negative split, which is a better balance than if we counted 3 star reviews as positive
-# Once we've built the model, we can change our mind if making 3 star reviews positive increases accuracy, which is does- I'll discuss this more in the write up
+# Once we've built the model, we can change our mind if making 3 star reviews positive increases accuracy, which it does- I'll discuss this more in the write up as this isn't necessarily the ideal solution
 
 df['posneg'] = posneg
 
