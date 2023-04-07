@@ -2,11 +2,10 @@ import spacy
 import nltk
 import pandas as pd
 import re
-import matplotlib.pyplot as plt
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score, confusion_matrix
+from sklearn.metrics import accuracy_score
 
 #nltk.download('punkt')
 #nltk.download('stopwords')
