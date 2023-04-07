@@ -2,7 +2,6 @@ from bs4 import BeautifulSoup
 import requests
 from datetime import datetime
 import pandas as pd
-from tabulate import tabulate
 
 # This is creating a small dataset using the first page of reviews (30 per book)
 # The aim is more to prove I can use the tool and conduct sentiment analysis, rather than creating a dataset with 17000+ reviews per book
