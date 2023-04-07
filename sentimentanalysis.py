@@ -56,7 +56,7 @@ df['posneg'] = posneg
 def preprocessing(review):
     words = [token.lemma_ for token in nlp(review) if not token.is_punct] # Tokenizing and lemmatizing (rather than stemming, to ensure more correct word forms)
     words = [re.sub(r"[^A-Za-z@']", "", word) for word in words] # Use regex to replace the characters that are not A-Za-z@' with nothing, including emoji
-    words = [re.sub(r"\S+(com|co.uk|net+\S)", "", word) for word in words] # Removing websites
+    words = [re.sub(r"\S+(com|co.uk|net)+\S", "", word) for word in words] # Removing websites
     words = [word for word in words if word != ' ' and word != ''] # Removing empty and empty words if there are any left
     stopwords = nltk.corpus.stopwords.words('english') # Importing NLTK stopwords
     words = [word.lower() for word in words if word.lower() not in stopwords] # Removing stopwords from text
