@@ -42,7 +42,6 @@ for link in links:
     for review in reviews:
         review = review.div.div.span.get_text() # Go into the truncatedcontent divs and pull out the text stripped of formatting tags
         review_text.append(review)
-    # TODO: Strip and clean the text here, and then we can add it into a dataframe at a later point
 
     # This one gets the reviewers sorted, as well as the things that don't need finding for every single link, like the book title and author, and book id / review id 
     reviewers = reviewfinder.findAll("div", class_="ReviewerProfile__name")
