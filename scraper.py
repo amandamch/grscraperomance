@@ -32,7 +32,7 @@ reviewid = 0
 
 # Iterate through each page for each book, and collect information from the reviews on each
 for link in links:
-    booklink = requests.get(link).text # Collect list of links to books to iterate through
+    booklink = requests.get(link).text
     reviewfinder = BeautifulSoup(booklink, 'lxml')
     if reviewfinder.find("h1", class_="Text Text__title1"):
         booktitle = reviewfinder.find("h1", class_="Text Text__title1").text
