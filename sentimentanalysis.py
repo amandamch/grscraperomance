@@ -37,7 +37,7 @@ for review in range(len(df)):
         posneg.append(0)
     elif df.iloc[review]['rating'] == 3:
         threestar += 1
-        posneg.append(0)
+        posneg.append(1)
     elif df.iloc[review]['rating'] == 4:
         fourstar += 1
         posneg.append(1)
