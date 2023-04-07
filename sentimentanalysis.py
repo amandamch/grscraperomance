@@ -60,8 +60,8 @@ def preprocessing(review):
     words = [word for word in words if word != ' ' and word != ''] # Removing empty and empty words if there are any left
     stopwords = nltk.corpus.stopwords.words('english') # Importing NLTK stopwords
     words = [word.lower() for word in words if word.lower() not in stopwords] # Removing stopwords from text
-    review_stemmed = " ".join(words) # Returning strings so that we can create a corpus of text
-    return review_stemmed
+    review_processed = " ".join(words) # Returning strings so that we can create a corpus of text
+    return review_processed
 
 df['reviews_cleaned'] = df['review_text'].apply(preprocessing)
 text = df['reviews_cleaned']
